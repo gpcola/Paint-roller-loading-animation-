@@ -1,0 +1,193 @@
+/* style.css: FINAL VERTICAL, GRAINY, ARCING STROKE ANIMATION with REALISTIC SPEED & RANDOM DRIPS */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+.animation-container {
+    position: relative;
+    width: 150px; 
+    height: 300px; 
+    border: 1px solid #ccc;
+    background-color: #fff;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.paint-roller-icon {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('paint-roller-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    top: -70px; 
+    left: 45px;
+    animation: rollAndPaintVertical 4s ease-in-out infinite; /* REALISTIC SPEED: 4s */
+    z-index: 2;
+}
+
+/* Styling for individual paint strokes (Grainy base) */
+.paint-stroke {
+    position: absolute;
+    width: 40px;
+    height: 0; 
+    background-color: #80dee6;
+    background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.1) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 8px 8px;
+    left: 0;
+    top: 0;
+    transform-origin: center top; 
+    animation: paintStrokeGrowVertical 4s ease-in-out infinite; /* REALISTIC SPEED: 4s */
+    z-index: 1;
+
+    /* Mask to create arcing edges */
+    -webkit-mask-image: linear-gradient(to right, black 0%, black 70%, transparent 80%, transparent 100%);
+    mask-image: linear-gradient(to right, black 0%, black 70%, transparent 80%, transparent 100%);
+    -webkit-mask-size: 150% 100%; 
+    mask-size: 150% 100%;
+    -webkit-mask-position: -10px center; 
+    mask-position: -10px center;
+}
+
+/* Individual stroke randomness, position, and RANDOM DENSITY */
+.stroke-1 {
+    width: 45px;
+    left: 20px; 
+    animation-delay: 0s;
+    transform: skewX(-2deg);
+    opacity: 0.65; /* Lightest stroke */
+}
+.stroke-2 {
+    width: 50px;
+    left: 45px;
+    animation-delay: 0.2s;
+    transform: skewX(1deg);
+    opacity: 0.85; /* Densest stroke */
+}
+.stroke-3 {
+    width: 40px;
+    left: 80px;
+    animation-delay: 0.4s;
+    transform: skewX(-1deg);
+    opacity: 0.75; /* Medium stroke */
+}
+
+
+/* Multiple Paint Drips with individual random-like timings */
+.paint-drip {
+    position: absolute;
+    width: 12px; 
+    height: 12px;
+    background-color: #00bcd4;
+    border-radius: 50%;
+    top: 55px; 
+    left: 70px; 
+    opacity: 0;
+    animation: dripEffect 2s ease-in-out forwards; 
+    z-index: 3;
+}
+
+.drip-1 {
+    animation-delay: 1s; 
+    animation-duration: 1.8s; 
+    left: 60px; 
+}
+.drip-2 {
+    animation-delay: 2.5s; 
+    animation-duration: 2s;
+    left: 80px; 
+}
+.drip-3 {
+    animation-delay: 3.8s; 
+    animation-duration: 1.6s;
+    left: 75px; 
+}
+
+
+/* Keyframe Animations */
+
+@keyframes rollAndPaintVertical {
+    0% {
+        transform: translateY(0px) rotateX(0deg);
+        opacity: 1;
+    }
+    49% {
+        transform: translateY(370px) rotateX(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(0px) rotateX(0deg); 
+        opacity: 0; 
+    }
+    51% {
+        opacity: 1; 
+    }
+    100% {
+        transform: translateY(0px) rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+
+@keyframes paintStrokeGrowVertical {
+    0% {
+        height: 0;
+        transform: translateY(0) translateX(0) skewX(0deg);
+        opacity: 0.0;
+    }
+    1% {
+        opacity: 1.0;
+    }
+    49% {
+        height: 300px;
+        transform: translateY(0) translateX(5px) skewX(-1deg);
+        opacity: 1.0;
+    }
+    50% {
+        height: 0;
+        opacity: 0.0;
+    }
+    100% {
+        height: 0;
+        opacity: 0.0;
+    }
+}
+
+
+@keyframes dripEffect {
+    0% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+    20% { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+    80% { 
+        opacity: 1;
+        transform: translateY(30px);
+    }
+    100% { 
+        opacity: 0;
+        transform: translateY(40px);
+    }
+}
